@@ -1,27 +1,37 @@
 package echoService;
 
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class EchoClient {
+public class nist_Client {
     public static void main(String[] args) throws Exception {
-        if (args.length !=2){
-            System.out.println("Please specify <serverIP> and <serverPort>");
-            return;
-        }
-        InetAddress serverIP=InetAddress.getByName(args[0]);
-        int serverPort=Integer.parseInt(args[1]);
+        System.out.println("Please specify <serverIP> and <serverPort>");
+        Scanner keyboard = new Scanner(System.in);
+        String serverip = keyboard.nextLine();
+        int serverPort= Integer.getInteger(keyboard.nextLine());
+        nist_Client client = new nist_Client();
+        client.client(serverip,serverPort);
+
+
+
+
+    }
+
+    public void client(String serverip,int serverPort_num) throws IOException {
+        InetAddress serverIP=InetAddress.getByName(serverip);
+        int serverPort=serverPort_num;
         Scanner console=new Scanner(System.in);
         String message=console.nextLine();
 
 
         DatagramSocket socket=new DatagramSocket();
         DatagramPacket request= new DatagramPacket(
-          message.getBytes(),
-          message.getBytes().length,serverIP, serverPort
+                message.getBytes(),
+                message.getBytes().length,serverIP, serverPort
         );
         socket.send(request);
 
@@ -40,6 +50,6 @@ public class EchoClient {
 
 
 
-    }
 
+    }
 }
