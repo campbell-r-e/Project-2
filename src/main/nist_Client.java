@@ -7,24 +7,27 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Scanner;
 import java.nio.ByteBuffer;
 
 public class nist_Client {
+    public String message= " ";
     public static void main(String[] args) throws Exception {
 
         Scanner keyboard = new Scanner(System.in);
-        System.out.println("Please specify <serverIP> ");
-        String serverip = keyboard.nextLine();
-        System.out.println("Server port");
-        int serverPort= Integer.parseInt(keyboard.nextLine());
         nist_Client client = new nist_Client();
-        client.client(serverip,serverPort);
+        if(args.length==0) {
+            System.out.println("Please specify <serverIP> ");
+            String serverip = keyboard.nextLine();
+            System.out.println("Server port");
+            int serverPort = Integer.parseInt(keyboard.nextLine());
+            client.client(serverip,serverPort);
+        }
+       else {
+            client.client(args[0], Integer.parseInt(args[1]));
 
-
+        }
 
 
     }
@@ -32,7 +35,7 @@ public class nist_Client {
     public void client(String serverip,int serverPort_num) throws IOException {
         InetAddress serverIP=InetAddress.getByName(serverip);
 
-        String message="";
+
 
 
         DatagramSocket socket=new DatagramSocket();
