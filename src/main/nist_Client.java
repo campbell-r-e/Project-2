@@ -3,7 +3,13 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Scanner;
 import java.nio.ByteBuffer;
 
@@ -49,7 +55,20 @@ public class nist_Client {
         );
         int value = ByteBuffer.wrap(serverMessage).getInt();
         long unsigned_value = Integer.toUnsignedLong(value);
-        System.out.println(new String(String.valueOf(unsigned_value)));
+        long new_Time = unsigned_value - 2208988800L;
+        long current=new_Time*1000L;
+
+
+        Instant instant = Instant.ofEpochMilli(current);
+
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.of("America/New_York"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
+
+
+        System.out.println("final converted date and time " + localDateTime.format(formatter));
+
+
+
 
 
 
